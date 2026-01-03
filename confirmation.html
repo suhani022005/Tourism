@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmation</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fff8f0;
+      --card: #ffffff;
+      --muted: #444;
+      --accent: #ff6a3d;
+      --accent-2: #ff5f6d;
+      --glass: rgba(255,255,255,0.6);
+      --shadow: 0 12px 30px rgba(16,24,40,0.08);
+      --switch-bg: #dcdcdc;
+      --switch-ball: #ffffff;
+      --trans: 300ms;
+    }
+
+    /* DARK MODE */
+    :root[data-theme="dark"] {
+      --bg: #0f1115;
+      --card: #0d1116;
+      --muted: #f1f1f1;
+      --accent: #ff8a66;
+      --accent-2: #ff6b7a;
+      --glass: rgba(255,255,255,0.08);
+      --shadow: 0 12px 30px rgba(0,0,0,0.5);
+      --switch-bg: #2a2a2a;
+      --switch-ball: #0a0d10;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: var(--muted);
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 6%;
+      background: linear-gradient(90deg, rgba(255,95,109,0.06), rgba(255,195,113,0.04));
+      backdrop-filter: blur(6px);
+      transition: 300ms;
+    }
+    header.scrolled {
+      background: var(--card);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+      padding: 10px 6%;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg,var(--accent-2),var(--accent));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Playfair Display", serif;
+      font-size: 22px;
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    nav a {
+      margin-left: 16px;
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    nav a.active {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* TOGGLE BUTTON */
+    .toggle {
+      width: 50px;
+      height: 26px;
+      border-radius: 50px;
+      background: var(--switch-bg);
+      border: 1px solid #ffffff77;
+      padding: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background var(--trans);
+    }
+    .toggle-ball {
+      width: 20px;
+      height: 20px;
+      background: var(--switch-ball);
+      border-radius: 50%;
+      transition: 300ms;
+      box-shadow: 0 0 10px #0005;
+    }
+    .toggle.on .toggle-ball {
+      transform: translateX(24px);
+    }
+
+    /* CONFIRMATION BOX */
+    .confirmation-box {
+      max-width: 550px;
+      margin: 140px auto 50px;
+      padding: 40px 30px;
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .confirmation-box h2 {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+
+    .confirmation-box p {
+      font-size: 1.1rem;
+      margin: 8px 0;
+      color: var(--muted);
+    }
+
+    .confirmation-box button {
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      border: none;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      margin-top: 20px;
+    }
+    .confirmation-box button:hover {
+      transform: scale(1.05);
+    }
+
+    footer{
+      text-align:center;
+      padding: 40px 0;
+      color: var(--muted);
+    }
+
+    @keyframes fadeIn{
+      from{ opacity:0; transform:translateY(20px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header id="site-header">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div>
+        <div style="font-weight:700">Tourism Management System</div>
+        <div style="font-size:12px;opacity:0.75">Explore • Plan • Travel</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="packages.html">Packages</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="toggle" id="theme-toggle">
+      <div class="toggle-ball"></div>
+    </div>
+  </header>
+
+  <!-- CONFIRMATION BOX -->
+  <section>
+    <div class="confirmation-box" id="confirmationBox">
+      <h2>🎉 Booking Confirmed!</h2>
+      <p>Thank you for choosing us!</p>
+      <div id="bookingDetails"></div>
+      <button onclick="window.location.href='index.html'">Back to Home</button>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Tourism Management System
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Shrink header on scroll
+    const header = document.getElementById("site-header");
+    window.addEventListener("scroll", () => {
+      header.classList.toggle("scrolled", window.scrollY > 20);
+    });
+
+    // Theme Toggle
+    const toggle = document.getElementById("theme-toggle");
+    const key = "tms-theme";
+
+    function applyTheme(t) {
+      document.documentElement.setAttribute("data-theme", t);
+      toggle.classList.toggle("on", t === "dark");
+    }
+
+    applyTheme(localStorage.getItem(key) || "light");
+
+    toggle.onclick = () => {
+      let next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+      applyTheme(next);
+      localStorage.setItem(key, next);
+    };
+
+    // Load booking details
+    const details = JSON.parse(localStorage.getItem("bookingDetails"));
+    if (details) {
+      document.getElementById("bookingDetails").innerHTML = `
+        <hr style="margin:20px 0;border-color:#ddd;">
+        <p><strong>Name:</strong> ${details.name}</p>
+        <p><strong>Email:</strong> ${details.email}</p>
+        <p><strong>Tour:</strong> ${details.tour}</p>
+        <p><strong>Date:</strong> ${details.date}</p>
+        <p><strong>People:</strong> ${details.people}</p>
+        <p><strong>Booked On:</strong> ${details.timestamp}</p>
+      `;
+    } else {
+      document.getElementById("bookingDetails").innerHTML = `
+        <p>No booking data found. Please make a booking first.</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>

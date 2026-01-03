@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - Tourism Management System</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #fff8f0;
+      --card: #ffffff;
+      --muted: #444444;
+      --accent: #ff6a3d;
+      --accent-2: #ff5f6d;
+      --glass: rgba(255,255,255,0.6);
+      --shadow: 0 12px 30px rgba(16,24,40,0.08);
+      --trans: 300ms;
+    }
+
+    /* DARK MODE */
+    :root[data-theme='dark']{
+      --bg: #0f1115;
+      --card: #0d1116;
+      --muted: #e1e1e1;
+      --accent: #ff8a66;
+      --accent-2: #ff6b7a;
+      --glass: rgba(255,255,255,0.08);
+      --shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+
+    *{ box-sizing:border-box; }
+    body{ margin:0; background:var(--bg); font-family:"Poppins",sans-serif; color:var(--muted); }
+
+    /* HEADER (Exact Same as Packages Page) */
+    header{
+      position:fixed;
+      top:0; left:0; right:0;
+      z-index:50;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 6%;
+      background:linear-gradient(90deg,rgba(255,95,109,0.06),rgba(255,195,113,0.04));
+      backdrop-filter:blur(6px);
+      transition:background var(--trans), padding var(--trans), box-shadow var(--trans);
+    }
+    header.scrolled{
+      background:var(--card);
+      box-shadow:0 6px 25px rgba(0,0,0,0.08);
+      padding:10px 6%;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:44px; height:44px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,var(--accent-2),var(--accent));
+      color:#fff; font-family:"Playfair Display",serif;
+      font-size:22px; font-weight:700;
+      box-shadow:var(--shadow);
+    }
+
+    nav a{
+      margin-left:16px;
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:500;
+      padding:8px 12px;
+      border-radius:8px;
+    }
+    nav a.active{
+      color:var(--accent);
+      font-weight:700;
+    }
+
+    /* THEME TOGGLE */
+    .toggle{
+      width:44px; height:28px;
+      background:linear-gradient(90deg,#e6e6e6,#fff);
+      border-radius:999px;
+      padding:4px;
+      display:flex; align-items:center;
+      cursor:pointer;
+      transition:background var(--trans);
+    }
+    .toggle-ball{
+      width:20px; height:20px;
+      background:white;
+      border-radius:50%;
+      transition:transform var(--trans);
+    }
+    .toggle.on .toggle-ball{
+      transform:translateX(16px);
+    }
+    :root[data-theme='dark'] .toggle{
+      background:linear-gradient(90deg,#222,#121214);
+    }
+    :root[data-theme='dark'] .toggle-ball{
+      background:#15181c;
+    }
+
+    /* REGISTER BOX */
+    .register-box{
+      max-width:480px;
+      margin:120px auto;
+      background:var(--card);
+      padding:35px;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      animation:fadeIn .8s ease;
+    }
+    .register-box h2{
+      text-align:center;
+      font-family:"Playfair Display",serif;
+      color:var(--accent);
+      margin-bottom:25px;
+      font-size:2rem;
+    }
+
+    .register-box input{
+      width:100%;
+      padding:14px;
+      margin-bottom:15px;
+      border-radius:12px;
+      border:1px solid #ccc;
+      background:var(--glass);
+      color:var(--muted);
+      font-size:1rem;
+    }
+
+    .register-box input:focus{
+      border-color:var(--accent);
+      outline:none;
+      box-shadow:0 0 10px rgba(255,120,90,0.3);
+    }
+
+    .register-box button{
+      width:100%;
+      padding:14px;
+      background:linear-gradient(90deg,var(--accent-2),var(--accent));
+      color:white;
+      font-size:1.1rem;
+      border:none;
+      border-radius:30px;
+      cursor:pointer;
+      font-weight:600;
+      box-shadow:0 8px 20px rgba(255,95,109,0.4);
+      transition:.3s;
+    }
+
+    .register-box button:hover{
+      transform:translateY(-2px);
+    }
+
+    .register-box p{
+      text-align:center;
+      margin-top:15px;
+    }
+    .register-box a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    footer{
+      text-align:center;
+      padding:26px;
+      color:var(--muted);
+    }
+
+    @keyframes fadeIn{
+      from { opacity:0; transform:translateY(30px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header id="site-header">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div>
+        <div style="font-weight:700">Tourism Management System</div>
+        <div style="font-size:12px; opacity:.8">Explore • Plan • Travel</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="packages.html">Packages</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="controls">
+      <div id="theme-toggle" class="toggle">
+        <div class="toggle-ball"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- REGISTER FORM -->
+  <section class="register-box">
+    <h2>Create an Account</h2>
+
+    <form onsubmit="return registerUser(event)">
+      <input type="text" id="regName" placeholder="Full Name" required>
+      <input type="email" id="regEmail" placeholder="Email Address" required>
+      <input type="password" id="regPassword" placeholder="Password" required>
+      <input type="password" id="regConfirm" placeholder="Confirm Password" required>
+
+      <button type="submit">Register</button>
+
+      <p>Already have an account? <a href="login.html">Login here</a></p>
+    </form>
+  </section>
+
+  <footer>
+    © 2025 Tourism Management System
+  </footer>
+
+<script>
+  // HEADER SCROLL EFFECT
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
+
+  // THEME TOGGLE
+  const toggle = document.getElementById('theme-toggle');
+  const storageKey = "tms-theme";
+
+  function applyTheme(theme){
+    document.documentElement.setAttribute("data-theme", theme);
+    if(theme === "dark") toggle.classList.add("on");
+    else toggle.classList.remove("on");
+  }
+
+  applyTheme(localStorage.getItem(storageKey) || "light");
+
+  toggle.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "light" ? "dark" : "light";
+    applyTheme(next);
+    localStorage.setItem(storageKey, next);
+  });
+
+  // FORM VALIDATION (simple)
+  function registerUser(e){
+    e.preventDefault();
+    let p1 = document.getElementById("regPassword").value;
+    let p2 = document.getElementById("regConfirm").value;
+
+    if(p1 !== p2){
+      alert("Passwords do not match!");
+      return false;
+    }
+
+    alert("Registration successful!");
+    window.location.href = "login.html";
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Package Details - Tourism Management System</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #fff8f0;
+      --card: #ffffff;
+      --muted: #444444;
+      --accent: #ff6a3d;
+      --accent-2: #ff5f6d;
+      --glass: rgba(255,255,255,0.6);
+      --shadow: 0 10px 30px rgba(16,24,40,0.08);
+      --trans-dur: 300ms;
+      --max-width: 1080px;
+    }
+
+    /* DARK THEME */
+    :root[data-theme='dark']{
+      --bg: #0f1115;
+      --card: #0d1116;
+      --muted: #cfcfcf;
+      --accent: #ff8a66;
+      --accent-2: #ff6b7a;
+      --glass: rgba(255,255,255,0.06);
+      --shadow: 0 12px 30px rgba(0,0,0,0.6);
+    }
+
+    * { box-sizing: border-box; }
+    html,body { height:100%; margin:0; background:var(--bg); color:var(--muted); font-family:"Poppins",sans-serif; -webkit-font-smoothing:antialiased; }
+
+    /* Header */
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:64px;
+      z-index:60;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 6%;
+      gap:12px;
+      background: linear-gradient(90deg, rgba(255,95,109,0.06), rgba(255,195,113,0.04));
+      transition:background var(--trans-dur), box-shadow var(--trans-dur), padding var(--trans-dur);
+      backdrop-filter: blur(6px);
+    }
+    header.scrolled { background: var(--card); box-shadow: 0 6px 25px rgba(0,0,0,0.08); padding:8px 6%; }
+
+    .brand { display:flex; align-items:center; gap:12px; font-weight:600; }
+    .brand .logo { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-family:"Playfair Display",serif; background:linear-gradient(135deg,var(--accent-2),var(--accent)); box-shadow:var(--shadow); }
+    nav.main-nav { display:flex; gap:14px; align-items:center; }
+    nav.main-nav a { color:var(--muted); text-decoration:none; padding:8px 10px; border-radius:8px; font-weight:500; }
+    nav.main-nav a.active { color:var(--accent); font-weight:700; }
+
+    /* Theme toggle (improved visibility) */
+    .controls { display:flex; align-items:center; gap:10px; }
+    .toggle {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:60px;
+      height:34px;
+      padding:6px;
+      border-radius:999px;
+      background: linear-gradient(90deg,#e6e6e6,#fff);
+      cursor:pointer;
+      transition: background var(--trans-dur), box-shadow var(--trans-dur);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    :root[data-theme='dark'] .toggle { background: linear-gradient(90deg,#1a1b1f,#121214); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+    .toggle .toggle-ball { width:22px; height:22px; border-radius:50%; background:white; transition: transform var(--trans-dur) cubic-bezier(.2,.9,.2,1); box-shadow:0 4px 10px rgba(0,0,0,0.12); }
+    :root[data-theme='dark'] .toggle .toggle-ball { background:#111315; }
+    .toggle.on .toggle-ball { transform: translateX(24px); }
+
+    /* Show small icon (sun/moon) - that indicates the other mode (so it remains visible) */
+    .toggle .icon { font-size:14px; line-height:1; user-select:none; }
+    /* By default, show moon on the left (in light mode) */
+    .toggle .icon-moon { display:block; color:#ffb07f; }
+    .toggle .icon-sun { display:none; color:#ffd86b; }
+    :root[data-theme='dark'] .toggle .icon-moon { display:none; }
+    :root[data-theme='dark'] .toggle .icon-sun { display:block; }
+
+    /* Page hero banner (this is the large image area the user asked for) */
+    .banner {
+      margin-top:64px;
+      height:320px;
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      align-items:flex-end;
+      padding:26px;
+      color:white;
+      position:relative;
+      box-shadow: inset 0 -60px 80px rgba(0,0,0,0.25);
+    }
+    .banner .banner-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width:100%;
+    }
+    .banner h1 { font-family:"Playfair Display",serif; margin:0; font-size:2rem; text-shadow: 0 6px 18px rgba(0,0,0,0.45); }
+    .banner p { margin:6px 0 0; opacity:0.95; text-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+
+    /* main container */
+    .container { max-width:var(--max-width); margin: 26px auto 120px; padding: 22px; background:var(--card); border-radius:14px; box-shadow:var(--shadow); transform:translateY(-40px); }
+
+    .details-grid { display:grid; grid-template-columns: 1fr 320px; gap:22px; align-items:start; }
+    .details-left { padding:8px 6px; }
+    .price-box { background:linear-gradient(180deg,var(--accent-2),var(--accent)); color:white; padding:16px; border-radius:12px; text-align:center; }
+    .price-box .price { font-size:1.6rem; font-weight:700; }
+    .price-box .days { margin-top:8px; opacity:0.95; }
+
+    .section-title { font-family:"Playfair Display",serif; color:var(--accent); margin:0 0 8px; font-size:1.15rem; }
+    ul.itinerary { padding-left:18px; color:var(--muted); line-height:1.7; }
+    ul.includes { padding-left:18px; color:var(--muted); line-height:1.7; }
+
+    .btn { display:inline-block; padding:12px 18px; border-radius:12px; border:none; cursor:pointer; font-weight:700; }
+    .btn-primary { background: linear-gradient(90deg,var(--accent-2),var(--accent)); color:white; box-shadow:0 10px 26px rgba(255,95,109,0.12); }
+    .btn-ghost { background:transparent; border:1px solid rgba(0,0,0,0.06); color:var(--muted); }
+
+    footer { margin-top:40px; padding:36px 20px; text-align:center; color:var(--muted); }
+
+    @media (max-width:980px) {
+      .details-grid { grid-template-columns: 1fr; }
+      .banner { height:260px; }
+      .container { transform:none; margin-top:18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="site-header">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div>
+        <div style="font-weight:700">Tourism Management System</div>
+        <div style="font-size:12px; opacity:0.8; margin-top:2px">Explore • Plan • Travel</div>
+      </div>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="packages.html" class="active">Packages</a>
+      <a href="wishlist.html">Wishlist</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="controls">
+      <div title="Toggle theme" id="theme-toggle" class="toggle" role="button" aria-pressed="false" tabindex="0">
+        <span class="icon icon-moon">🌙</span>
+        <div class="toggle-ball" aria-hidden="true"></div>
+        <span class="icon icon-sun" aria-hidden="true">☀️</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- BANNER (image will be set by JS based on package) -->
+  <section id="banner" class="banner" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop');">
+    <div class="banner-inner">
+      <h1 id="banner-title">Loading...</h1>
+      <p id="banner-sub">Loading package details</p>
+    </div>
+  </section>
+
+  <!-- DETAILS CONTAINER -->
+  <main class="container" id="mainContent">
+    <div class="details-grid">
+      <div class="details-left" id="detailsLeft">
+        <!-- Left column content injected by JS -->
+        <h2 class="section-title">Overview</h2>
+        <p id="overviewText" style="color:var(--muted)"></p>
+
+        <h3 class="section-title" style="margin-top:18px">Itinerary</h3>
+        <ul class="itinerary" id="itineraryList"></ul>
+
+        <h3 class="section-title" style="margin-top:18px">Package Includes</h3>
+        <ul class="includes" id="includesList"></ul>
+      </div>
+
+      <aside>
+        <div class="price-box">
+          <div id="packageName" style="font-weight:700; font-size:1rem"></div>
+          <div class="price" id="packagePrice">₹—</div>
+          <div class="days" id="packageDays">— Days</div>
+          <div style="margin-top:12px">
+            <button class="btn btn-primary" id="bookNow">Book Now</button>
+            <button class="btn btn-ghost" id="viewPackages" style="margin-left:8px">Back to Packages</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div style="max-width:var(--max-width); margin:0 auto">
+      <div style="font-weight:700">Tourism Management System</div>
+      <div style="opacity:0.8; margin-top:6px">Plan smarter. Travel happier.</div>
+      <div style="margin-top:12px; opacity:0.85">© <span id="year"></span> Tourism Management System — All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // --- constants: package data + banner images ---
+    const packages = {
+      1: {
+        name: "Goa Beach Tour",
+        price: "₹5,000 | 3 Days",
+        priceNumber: 5000,
+        overview: "Enjoy the golden beaches, nightlife, seafood and water sports that Goa is famous for.",
+        itinerary: ["Day 1: Arrival & Beach Resort Stay", "Day 2: North Goa Sightseeing + Water Sports", "Day 3: South Goa Tour & Departure"],
+        includes: ["3-Star Resort Stay", "Breakfast Buffet", "Beach Activities", "Pickup & Drop"],
+        banner: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop"
+      },
+      2: {
+        name: "Himalayan Trek",
+        price: "₹12,000 | 7 Days",
+        priceNumber: 12000,
+        overview: "A thrilling high-altitude adventure with scenic mountains, campsites and guided trekking.",
+        itinerary: ["Day 1: Base Camp Arrival", "Day 2-5: Guided Mountain Trek", "Day 6: Camping & Bonfire", "Day 7: Return Journey"],
+        includes: ["Professional Trek Guide", "Meals During Trek", "Tents & Sleeping Bags", "Safety Equipment"],
+        banner: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop"
+      },
+      3: {
+        name: "Mumbai City Tour",
+        price: "₹3,000 | 1 Day",
+        priceNumber: 3000,
+        overview: "Experience the city of dreams — Bollywood, Marine Drive, Gateway of India and more!",
+        itinerary: ["Morning: Gateway of India + Taj Hotel", "Afternoon: Bollywood Studio Tour", "Evening: Marine Drive + Street Food"],
+        includes: ["AC Transport", "Snacks", "Guide Support"],
+        banner: "https://images.unsplash.com/photo-1509358271058-acd22cc93898?q=80&w=1600&auto=format&fit=crop"
+      },
+      4: {
+        name: "Rajasthan Desert Safari",
+        price: "₹8,500 | 4 Days",
+        priceNumber: 8500,
+        overview: "Live like a royal with camel rides, desert camp stay and traditional Rajasthani culture.",
+        itinerary: ["Day 1: Jaisalmer Fort Visit", "Day 2: Camel Safari", "Day 3: Desert Camping", "Day 4: Local Market & Departure"],
+        includes: ["Camel Ride", "Desert Tent", "Cultural Program", "Traditional Dinner"],
+        // desert-focused image (improved)
+        banner: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80"
+      },
+      5: {
+        name: "Andaman Island Tour",
+        price: "₹15,000 | 6 Days",
+        priceNumber: 15000,
+        overview: "Crystal-clear beaches, underwater beauty and island hopping adventures.",
+        itinerary: ["Day 1: Port Blair Arrival", "Day 2: Havelock Island", "Day 3: Elephant Beach Snorkeling", "Day 4: Neil Island Tour", "Day 5: Beach Leisure", "Day 6: Departure"],
+        includes: ["Hotel Stay", "Island Transfers", "Breakfast", "Snorkeling"],
+        banner: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
+      },
+      6: {
+        name: "Kerala Backwater Tour",
+        price: "₹9,000 | 3 Days",
+        priceNumber: 9000,
+        overview: "Relax in a luxury houseboat while floating through the calm backwaters of Alleppey.",
+        itinerary: ["Day 1: Houseboat Boarding", "Day 2: Backwater Cruise + Kerala Meals", "Day 3: Return to Harbor"],
+        includes: ["Houseboat Stay", "Unlimited Meals", "Cruise Ride", "Tea & Snacks"],
+        banner: "https://images.unsplash.com/photo-1491557345352-5929e343eb89?q=80&w=1600&auto=format&fit=crop"
+      }
+    };
+
+    // fill year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // read package id from query string
+    const params = new URLSearchParams(window.location.search);
+    const id = Number(params.get('id') || 1); // default to 1 if missing
+    const pkg = packages[id];
+
+    // populate UI
+    function renderPackage(p) {
+      const bannerEl = document.getElementById('banner');
+      const titleEl = document.getElementById('banner-title');
+      const subEl = document.getElementById('banner-sub');
+
+      if (!p) {
+        titleEl.textContent = "Package Not Found";
+        subEl.textContent = "Please go back to packages to explore our tours.";
+        bannerEl.style.backgroundImage = "linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45))";
+        document.getElementById('overviewText').textContent = "";
+        document.getElementById('itineraryList').innerHTML = "";
+        document.getElementById('includesList').innerHTML = "";
+        document.getElementById('packageName').textContent = "N/A";
+        document.getElementById('packagePrice').textContent = "—";
+        document.getElementById('packageDays').textContent = "";
+        return;
+      }
+
+      // banner
+      bannerEl.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url('${p.banner}')`;
+      titleEl.textContent = p.name;
+      subEl.textContent = p.price;
+
+      // overview
+      document.getElementById('overviewText').textContent = p.overview;
+
+      // itinerary
+      document.getElementById('itineraryList').innerHTML = p.itinerary.map(i => `<li>${i}</li>`).join('');
+
+      // includes
+      document.getElementById('includesList').innerHTML = p.includes.map(i => `<li>${i}</li>`).join('');
+
+      // sidebar
+      document.getElementById('packageName').textContent = p.name;
+      document.getElementById('packagePrice').textContent = p.price;
+      // extract days for the small label (last part of price string)
+      const daysMatch = p.price.match(/(\d+)\s*Days?/i);
+      document.getElementById('packageDays').textContent = daysMatch ? `${daysMatch[1]} Days` : '';
+    }
+
+    renderPackage(pkg);
+
+    // button hooks
+    document.getElementById('bookNow').addEventListener('click', () => {
+      // prefill booking page with package name via query (booking page earlier accepted query in another version)
+      window.location.href = `booking.html?tour=${encodeURIComponent(pkg ? pkg.name : '')}`;
+    });
+    document.getElementById('viewPackages').addEventListener('click', () => {
+      window.location.href = 'packages.html';
+    });
+
+    // header scroll behaviour
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 26) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
+    // THEME TOGGLE: improved visibility and persistence
+    const toggle = document.getElementById('theme-toggle');
+    const storageKey = 'tms-theme';
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      const isDark = theme === 'dark';
+      // set aria and toggle class for visual ball position
+      toggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+      if (isDark) toggle.classList.add('on'); else toggle.classList.remove('on');
+    }
+
+    // initialize from storage (or prefer system? You stored earlier so use storage)
+    const stored = localStorage.getItem(storageKey);
+    applyTheme(stored === 'dark' ? 'dark' : 'light');
+
+    toggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem(storageKey, next);
+    });
+
+    // keyboard shortcut: ctrl/cmd + d toggles theme
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'd' && (e.ctrlKey || e.metaKey)) {
+        toggle.click();
+      }
+    });
+
+    // small accessibility: allow toggle via Enter/Space when focused
+    toggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle.click();
+      }
+    });
+  </script>
+</body>
+</html>
